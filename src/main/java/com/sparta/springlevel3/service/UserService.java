@@ -144,46 +144,4 @@ public class UserService {
          */
         return "{\"message\": \"회원가입 성공\", \"statusCode\": 200}";
     }
-
-
-    /**
-     * 로그인을 처리하는 메서드
-     * @param requestDto 사용자가 입력한 로그인 정보
-     * @param res client에게 토큰을 전달하기 위한 response 객체
-     * @return 로그인이 완료된 경우 로그인 완료 메시지 및 Status Code 200 반환
-     */
-//    public ResponseEntity<String> login(LoginDto requestDto, HttpServletResponse res) {
-//        String username = requestDto.getUsername();
-//        String password = requestDto.getPassword();
-//
-//        /**
-//         * 로그인 시 입력한 ID가 DB에 존재하는지 확인
-//         */
-//        User user = userRepository.findByUsername(username).orElse(null);
-//
-//        /**
-//         * 존재하지 않는 ID인 경우
-//         */
-//        if (user == null) {
-//            return ResponseEntity.badRequest().body("{\"message\": \"등록된 사용자가 없습니다\", \"statusCode\": 400}");
-//        }
-//
-//        /**
-//         * 입력한 비밀번호와 DB에 저장된 비밀번호가 일치하는지 확인
-//         */
-//        if (!passwordEncoder.matches(password,user.getPassword()))
-//            return ResponseEntity.badRequest().body("{\"message\": \"PW가 일치하지 않습니다.\", \"statusCode\": 400}");
-//
-//        /**
-//         * 토큰 생성 및 쿠키에 토큰 추가
-//         */
-//        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
-//        jwtUtil.addJwtToCookie(token, res);
-//
-//        /**
-//         * 로그인 완료 메시지 및 Status Code 200 반환
-//         */
-//        return ResponseEntity.ok(("{\"message\": \"로그인 성공\", \"statusCode\": 200}"));
-//    }
-
 }
