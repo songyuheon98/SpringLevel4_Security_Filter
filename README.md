@@ -6,6 +6,6 @@
 
 # API 명세서
 
-[Postman Documentation](https://gold-astronaut-782786.postman.co/workspace/sparta---Lv2---mock~daf3a3b5-d8cb-45de-979c-254b64b3b406/collection/23338677-47208ec5-059e-4f7e-87f8-575fe2dba101?action=share&creator=23338677)
+[Postman Documentation](https://galactic-rocket-548808.postman.co/workspace/galactic-rocket-548808-Workspac~6d6bb417-25a4-4a1c-893a-879e2595050c/collection/29336568-11ccd306-482d-4765-a2ce-40c205589a35?action=share&source=copy-link&creator=29336568)
 
 Postman으로 작성하였습니다.
