@@ -12,7 +12,7 @@ import java.io.IOException;
  * 클라이언트의 요청 정보를 로그로 남기는 필터
  */
 @Slf4j(topic = "LoggingFilter")
-@Component
+//@Component
 @Order(1)
 public class LoggingFilter implements Filter {
     /**

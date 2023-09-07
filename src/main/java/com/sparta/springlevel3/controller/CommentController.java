@@ -3,9 +3,10 @@ package com.sparta.springlevel3.controller;
 import com.sparta.springlevel3.dto.CommentRequestDto;
 import com.sparta.springlevel3.dto.CommentResponseDto;
 import com.sparta.springlevel3.entity.User;
+import com.sparta.springlevel3.security.UserDetailsImpl;
 import com.sparta.springlevel3.service.CommentService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -30,9 +31,8 @@ public class CommentController {
      * @return 생성된 댓글에 대한 정보를 클라이언트에게 알려주기 위해 CommentResponseDto 형태로 반환
      */
     @PostMapping("/comment")
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, HttpServletRequest req) {
-        User user = (User) req.getAttribute("user");
-
+    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user = (User) userDetails.getUser();
         return commentService.createComment(requestDto, user.getUsername());
     }
 
@@ -44,10 +44,8 @@ public class CommentController {
      * @return 수정한 댓글을 반환형식에 맞게 CommentResponseDto 를 만들어 반환
      */
     @PutMapping("/comment/{id}")
-    public CommentResponseDto updateComment(@PathVariable Long id, @RequestBody Map<String,String> contents, HttpServletRequest req) {
-
-        User user = (User) req.getAttribute("user");
-
+    public CommentResponseDto updateComment(@PathVariable Long id, @RequestBody Map<String,String> contents,  @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = (User) userDetails.getUser();
         return commentService.updateComment(id, contents.get("contents"), user.getUsername(), user.getRole());
     }
 
@@ -59,8 +57,8 @@ public class CommentController {
      */
 
     @DeleteMapping("/comment/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long id, HttpServletRequest req) {
-        User user = (User) req.getAttribute("user");
+    public ResponseEntity<String> deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = (User) userDetails.getUser();
         return commentService.deleteComment(id, user.getUsername(), user.getRole());
     }
 }

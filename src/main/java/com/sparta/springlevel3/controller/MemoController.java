@@ -5,9 +5,10 @@ import com.sparta.springlevel3.dto.MemoRequestDto;
 import com.sparta.springlevel3.dto.MemoResponseDto;
 import com.sparta.springlevel3.entity.OnlyMemo;
 import com.sparta.springlevel3.entity.User;
+import com.sparta.springlevel3.security.UserDetailsImpl;
 import com.sparta.springlevel3.service.MemoService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +36,8 @@ public class MemoController {
      * @return 생성된 메모에 대한 정보를 클라이언트에게 알려주기 위해 MemoResponseDto 형태로 반환
      */
     @PostMapping("/memos")
-    public MemoResponseDto createMemo(@RequestBody MemoRequestDto requestDto, HttpServletRequest req) {
-        User user = (User) req.getAttribute("user");
-        return memoService.createMemo(requestDto, user.getUsername());
+    public MemoResponseDto createMemo(@RequestBody MemoRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return memoService.createMemo(requestDto, userDetails.getUser().getUsername());
     }
 
     /**
@@ -62,28 +62,28 @@ public class MemoController {
 
     /**
      * 클라이언트에게 받은 메모 ID를 바탕으로 메모를 수정하고, 수정된 메모를 반환형식에 맞게 MemoResponseDto 를 만들어 반환
-     *
-     * @param id         클라이언트가 요청한 수정할 메모의 ID
+     * @param id 클라이언트가 요청한 수정할 메모의 ID
      * @param requestDto 클라이언트가 보낸 메모 수정 정보를 담은 DTO
-     * @param req        필터에서 저장한 토큰의 유저 정보를 가져오기 위해 사용
+     * @param req 필터에서 저장한 토큰의 유저 정보를 가져오기 위해 사용
      * @return 수정된 메모를 반환형식에 맞게 MemoResponseDto 를 만들어 반환
      */
-    @PutMapping("/memos/{id}")
-    public OnlyMemo updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto, HttpServletRequest req) {
-        User user = (User) req.getAttribute("user");
 
+
+    @PutMapping("/memos/{id}")
+    public OnlyMemo updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        User user = (User) userDetails.getUser();
         return memoService.updateMemo(id, requestDto, user.getUsername(), user.getRole());
     }
 
     /**
      * 클라이언트에게 받은 메모 ID를 바탕으로 메모를 삭제하고, 삭제된 메모의 ID를 반환형식에 맞게 String 으로 만들어 반환
      * @param id 클라이언트가 요청한 삭제할 메모의 ID
-     * @param req 필터에서 저장한 토큰의 유저 정보를 가져오기 위해 사용
+     * @param userDetails
      * @return 삭제 여부를 알려주는 메시지
      */
     @DeleteMapping("/memos/{id}")
-    public ResponseEntity<String> deleteMemo(@PathVariable Long id, HttpServletRequest req) {
-        User user = (User) req.getAttribute("user");
+    public ResponseEntity<String> deleteMemo(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails ){
+        User user = (User) userDetails.getUser();
 
         return memoService.deleteMemo(id, user.getUsername(), user.getRole());
     }

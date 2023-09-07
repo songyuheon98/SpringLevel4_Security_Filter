@@ -41,8 +41,8 @@ public class UserController {
      * @param res Service의 Login 메소드를 통해 생성된 JWT를 HttpOnly Cookie에 담아 전달하기 위한 HttpServletResponse
      * @return 로그인 완료 사실을 알려주는 메시지를 반환
      */
-    @PostMapping("/user/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto requestDto, HttpServletResponse res) {
-        return userService.login(requestDto, res);
-    }
+//    @PostMapping("/user/login")
+//    public ResponseEntity<String> login(@RequestBody LoginDto requestDto, HttpServletResponse res) {
+//        return userService.login(requestDto, res);
+//    }
 }

@@ -22,7 +22,7 @@ import java.io.PrintWriter;
  */
 
 @Slf4j(topic = "AuthFilter")
-@Component
+//@Component
 @Order(2)
 public class AuthFilter implements Filter {
 
